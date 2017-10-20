@@ -12,13 +12,20 @@ export const AUTHENTICATE_TWITTER_APP_FAIL =
 export const getTweets = createAction(GET_TWEETS, 'payload')
 export const authenticateTwitterApi = createAction(AUTHENTICATE_TWITTER_APP)
 
-const initialState = {all: [], accessToken: ''}
+const initialState = {
+    golemproject: [],
+    Monetha_io: [],
+    NeblioTeam: [],
+    SubstratumNet: [],
+    NEO_Blockchain: [],
+    accessToken: ''
+}
 
 export default createReducer(initialState, {
     [AUTHENTICATE_TWITTER_APP_SUCCESS](state, action) {
         return {...state, accessToken: action.payload}
     },
-    [GET_TWEETS_SUCCESS](state, action) {
-        return {...state, all: action.payload}
+    [GET_TWEETS_SUCCESS](state, {payload: {name, data}}) {
+        return {...state, [name]: data}
     }
 })

@@ -36,7 +36,6 @@ module.exports = {
             )
 
             myCache.get('access_token', (err, value) => {
-                console.log('cached', value)
                 if (!err) {
                     if (!value) {
                         R(
@@ -79,7 +78,7 @@ module.exports = {
             })
         }
 
-        app.get('/twitter/timeline', authenticate, (req, res) => {
+        app.get('/twitter/timeline/:name', authenticate, (req, res) => {
             // const CONSUMER_KEY =
             //     'ljrAmYZTfi05SHUeU1b2Dq5TY:bxiZNQ91VNQIYbkVl12TVmBAAT3PYxAIcKYibsDA2MJJtk6E8d'
 
@@ -168,7 +167,7 @@ module.exports = {
                 bearer_token: req.token.access_token
             })
 
-            var params = {screen_name: 'golemproject', count: 10}
+            var params = { screen_name: req.params.name, count: 50 }
             client.get('statuses/user_timeline', params, function(
                 error,
                 tweets,
@@ -185,10 +184,10 @@ module.exports = {
             res.sendFile(path.join(__dirname, '..', 'index.html'))
         })
 
-        app.listen(3000, () => {
+        app.listen(3001, () => {
             console.log('-----------------------------')
             console.log(
-                `========> LISTENING TO PORT ${3000} ON '${'DEV'}' ENVIRONMENT`
+                `========> LISTENING TO PORT ${3001} ON '${'DEV'}' ENVIRONMENT`
             )
             console.log('-----------------------------')
         })

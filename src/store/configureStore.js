@@ -1,4 +1,5 @@
 import {createStore, applyMiddleware} from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from '../ducks'
@@ -9,7 +10,7 @@ export default function configureStore(initialState) {
     const store = createStore(
         rootReducer,
         initialState,
-        applyMiddleware(sagaMiddleware)
+        composeWithDevTools(applyMiddleware(sagaMiddleware))
     )
     sagaMiddleware.run(rootSaga)
 
