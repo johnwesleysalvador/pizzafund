@@ -167,17 +167,21 @@ module.exports = {
                 bearer_token: req.token.access_token
             })
 
-            var params = { screen_name: req.params.name, count: 50 }
-            client.get('statuses/user_timeline', params, function(
-                error,
-                tweets,
-                response
-            ) {
-                if (!error) {
-                    return res.send(tweets)
-                }
-                return res.send(error)
-            })
+            // var params = { screen_name: req.params.name, count: 50 }
+            // client.get('statuses/user_timeline', params, function(
+            //     error,
+            //     tweets,
+            //     response
+            // ) {
+            //     if (!error) {
+            //         return res.send(tweets)
+            //     }
+            //     return res.send(error)
+            // })
+            client.get('search/tweets', {q: 'since:2017-10-20+from:' + req.params.name}, function(error, tweets, response) {
+                return res.send(tweets);
+             });
+
         })
 
         app.get('*', (req, res) => {

@@ -18,7 +18,7 @@ const initialState = {
     NeblioTeam: [],
     SubstratumNet: [],
     NEO_Blockchain: [],
-    accessToken: ''
+    omise_go: []
 }
 
 export default createReducer(initialState, {
@@ -26,6 +26,6 @@ export default createReducer(initialState, {
         return {...state, accessToken: action.payload}
     },
     [GET_TWEETS_SUCCESS](state, {payload: {name, data}}) {
-        return {...state, [name]: data}
+        return {...state, [name]: data.statuses}
     }
 })

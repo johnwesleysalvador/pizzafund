@@ -60,6 +60,7 @@ export function* getTweets() {
     yield call(getTweetFor, 'NeblioTeam')
     yield call(getTweetFor, 'SubstratumNet')
     yield call(getTweetFor, 'NEO_Blockchain')
+    yield call(getTweetFor, 'omise_go')
 }
 
 // export default [
