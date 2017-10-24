@@ -1,43 +1,22 @@
 const webpack = require('webpack')
 const path = require('path')
+const webpackConfig = require('./webpack.config')
 
 module.exports = {
     devtool: 'eval-source-map',
 
     entry: [
-        'babel-polyfill',
         'webpack-hot-middleware/client?reload=true',
-        './src/index.js'
+        ...webpackConfig.entry
     ],
 
-    output: {
-        filename: 'bundle.js',
-        path: path.join(__dirname, '..', 'dist', 'public'),
-        publicPath: '/dist/'
-    },
+    output: webpackConfig.output,
 
-    resolve: {
-        modules: ['node_modules', path.join(__dirname, '..', 'src')],
-        extensions: ['.js']
-    },
+    resolve: webpackConfig.commonResolves,
 
     plugins: [new webpack.HotModuleReplacementPlugin()],
 
     module: {
-        loaders: [
-            {
-                test: /\.js?$|\.jsx?$/,
-                loader: 'babel-loader',
-                include: path.join(__dirname, '..', 'src'),
-                query: {
-                    presets: ['es2015', 'react', 'stage-2'],
-                    env: {
-                        development: {
-                            presets: ['react-hmre']
-                        }
-                    }
-                }
-            }
-        ]
+        loaders: webpackConfig.commonLoaders
     }
 }

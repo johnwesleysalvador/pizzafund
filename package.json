@@ -6,8 +6,16 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "clean": "rimraf ./dist",
-        "build:dev": "cross-env NODE_ENV=development webpack --colors --config ./webpack/webpack.config.dev.js",
-        "build": "npm run clean"
+        "build:dev":
+            "cross-env NODE_ENV=development webpack --colors --config ./webpack/webpack.config.dev.js",
+        "build:prod":
+            "cross-env NODE_ENV=production webpack --colors --config ./webpack/webpack.config.prod.js",
+        "build": "npm run clean",
+        "heroku-postbuild": "npm run clean && npm run build:prod",
+        "start": "node index",
+
+        "run:prod":
+            "npm run clean && npm run build:prod && cross-env NODE_ENV=production npm run start"
     },
     "author": "",
     "license": "ISC",
