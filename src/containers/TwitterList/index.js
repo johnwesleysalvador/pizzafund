@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import moment from 'moment'
 import {connect} from 'react-redux'
 import {
     Table,
@@ -24,12 +25,22 @@ const sum = (items, prop) => {
 
 class TwitterList extends Component {
     componentWillMount() {
-        this.props.getTweets()
+        this.props.getTweets({
+            start: moment()
+                .subtract(1, 'days')
+                .format('YYYY-MM-DD'),
+            end: moment().format('YYYY-MM-DD')
+        })
     }
 
     renderStatsForTweeter = (tweets, name) => {
         const retweetCount = sum(tweets, 'retweet_count')
         const likesCount = sum(tweets, 'favorite_count')
+        const total = tweets.length * 3 + retweetCount * 3 + likesCount * 2
+        const style =
+            total > 0
+                ? {background: '#455A64', color: '#ffffff'}
+                : {background: '#CFD8DC', color: '#000000'}
         return (
             <Wrapper>
                 <Table>
@@ -76,6 +87,12 @@ class TwitterList extends Component {
                             <TableRowColumn>{likesCount}</TableRowColumn>
                             <TableRowColumn>{likesCount * 2}</TableRowColumn>
                         </TableRow>
+                        <TableRow style={style}>
+                            <TableRowColumn>Total</TableRowColumn>
+                            <TableRowColumn />
+                            <TableRowColumn />
+                            <TableRowColumn>{total}</TableRowColumn>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </Wrapper>
@@ -85,7 +102,6 @@ class TwitterList extends Component {
     render() {
         return (
             <div>
-                <StatsChart />
                 {this.renderStatsForTweeter(this.props.golem, 'golemproject')}
                 {this.renderStatsForTweeter(this.props.monetha, 'Monetha_io')}
                 {this.renderStatsForTweeter(this.props.neblio, 'NeblioTeam')}
@@ -102,12 +118,14 @@ class TwitterList extends Component {
 
 const mapStateToProps = ({
     twitter: {
-        golemproject,
-        Monetha_io,
-        NeblioTeam,
-        SubstratumNet,
-        NEO_Blockchain,
-        omise_go
+        accounts: {
+            golemproject,
+            Monetha_io,
+            NeblioTeam,
+            SubstratumNet,
+            NEO_Blockchain,
+            omise_go
+        }
     }
 }) => ({
     golem: golemproject,

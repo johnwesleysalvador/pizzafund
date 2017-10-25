@@ -35,11 +35,11 @@ export function* loginToTwitter() {
     }
 }
 
-function* getTweetFor(screenName) {
+function* getTweetFor(screenName, payload) {
     try {
         const response = yield call(
             axios.get,
-            '/twitter/timeline/' + screenName
+            `/twitter/timeline/${screenName}?startDate=${payload.start}&endDate=${payload.end}`
         )
 
         yield put({
@@ -54,13 +54,14 @@ function* getTweetFor(screenName) {
     }
 }
 
-export function* getTweets() {
-    yield call(getTweetFor, 'golemproject')
-    yield call(getTweetFor, 'Monetha_io')
-    yield call(getTweetFor, 'NeblioTeam')
-    yield call(getTweetFor, 'SubstratumNet')
-    yield call(getTweetFor, 'NEO_Blockchain')
-    yield call(getTweetFor, 'omise_go')
+export function* getTweets({payload}) {
+    console.log(payload)
+    yield call(getTweetFor, 'golemproject', payload)
+    yield call(getTweetFor, 'Monetha_io', payload)
+    yield call(getTweetFor, 'NeblioTeam', payload)
+    yield call(getTweetFor, 'SubstratumNet', payload)
+    yield call(getTweetFor, 'NEO_Blockchain', payload)
+    yield call(getTweetFor, 'omise_go', payload)
 }
 
 // export default [

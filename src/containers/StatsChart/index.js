@@ -19,8 +19,9 @@ import {statsCount} from '../../utils/helper'
 
 const Wrapper = styled.div`
     display: flex;
-    width: 1280px;
+    width: 100%;
     height: 700px;
+    font-family: 'Roboto';
 `
 
 const colors = [
@@ -92,6 +93,7 @@ class StatsChart extends Component {
                         {Object.keys(twitter).map((name, index) => {
                             return (
                                 <Line
+                                    key={`${name}.chart`}
                                     type="monotone"
                                     dataKey={name}
                                     stroke={colors[index]}
@@ -106,7 +108,7 @@ class StatsChart extends Component {
 }
 
 const mapStateToProps = ({twitter}) => ({
-    twitter
+    twitter: twitter.accounts
 })
 
 export default connect(mapStateToProps)(StatsChart)

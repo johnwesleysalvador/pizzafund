@@ -107,8 +107,19 @@ module.exports = {
             // })
             client.get(
                 'search/tweets',
-                {q: 'since:2017-10-20+from:' + req.params.name},
+                {
+                    q:
+                        'since:' +
+                        req.query.startDate +
+                        '+until:' +
+                        req.query.endDate +
+                        '+from:' +
+                        req.params.name
+                },
                 function(error, tweets, response) {
+                    if (error) {
+                        return res.send(error)
+                    }
                     return res.send(tweets)
                 }
             )
